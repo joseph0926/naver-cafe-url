@@ -1,5 +1,7 @@
 const updateURL = (newURL: string) => {
-  window.history.pushState({}, "", newURL);
+  if (newURL !== window.location.href) {
+    window.history.pushState({}, "", newURL);
+  }
 };
 
 const monitorIframeURL = (iframe: HTMLIFrameElement) => {
