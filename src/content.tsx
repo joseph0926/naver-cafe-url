@@ -11,6 +11,8 @@ const monitorIframeURL = (iframe: HTMLIFrameElement) => {
   const checkURLChange = () => {
     if (iframeDocument) {
       const currentURL = iframeDocument.URL;
+      console.log("currentURL: ", currentURL);
+
       if (currentURL !== previousURL) {
         previousURL = currentURL;
         updateURL(currentURL);
@@ -18,9 +20,7 @@ const monitorIframeURL = (iframe: HTMLIFrameElement) => {
     }
   };
 
-  iframe.contentWindow?.addEventListener("popstate", checkURLChange);
-  iframe.contentWindow?.addEventListener("pushState", checkURLChange);
-  iframe.contentWindow?.addEventListener("replaceState", checkURLChange);
+  setInterval(checkURLChange, 500);
 };
 
 const init = () => {
