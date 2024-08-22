@@ -7,17 +7,17 @@ const updateURL = (newURL: string) => {
 const monitorIframeURL = (iframe: HTMLIFrameElement) => {
   let previousURL = iframe.contentWindow?.location.href || "";
 
-  const checkURLChange = () => {
-    const iframeDocument = iframe.contentDocument;
-    if (iframeDocument) {
-      const currentURL = iframeDocument.URL;
-      if (currentURL !== previousURL) {
-        previousURL = currentURL;
-        updateURL(currentURL);
-      }
+  const onURLChange = () => {
+    const currentURL = iframe.contentWindow?.location.href || "";
+    if (currentURL !== previousURL) {
+      previousURL = currentURL;
+      updateURL(currentURL);
     }
   };
-  setInterval(checkURLChange, 500);
+
+  iframe.contentWindow?.addEventListener("popstate", onURLChange);
+  iframe.contentWindow?.addEventListener("pushState", onURLChange);
+  iframe.contentWindow?.addEventListener("replaceState", onURLChange);
 };
 
 const init = () => {
