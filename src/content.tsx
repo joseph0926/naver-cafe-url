@@ -5,7 +5,7 @@ const updateURL = (newURL: string) => {
 };
 
 const monitorIframeURL = (iframe: HTMLIFrameElement) => {
-  let previousURL = "";
+  let previousURL = iframe.contentWindow?.location.href || "";
 
   const checkURLChange = () => {
     const iframeDocument = iframe.contentDocument;
