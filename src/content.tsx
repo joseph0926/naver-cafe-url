@@ -5,19 +5,22 @@ const updateURL = (newURL: string) => {
 };
 
 const monitorIframeURL = (iframe: HTMLIFrameElement) => {
-  let previousURL = iframe.contentWindow?.location.href || "";
+  const iframeDocument = iframe.contentDocument;
+  let previousURL = iframeDocument?.URL || "";
 
-  const onURLChange = () => {
-    const currentURL = iframe.contentWindow?.location.href || "";
-    if (currentURL !== previousURL) {
-      previousURL = currentURL;
-      updateURL(currentURL);
+  const checkURLChange = () => {
+    if (iframeDocument) {
+      const currentURL = iframeDocument.URL;
+      if (currentURL !== previousURL) {
+        previousURL = currentURL;
+        updateURL(currentURL);
+      }
     }
   };
 
-  iframe.contentWindow?.addEventListener("popstate", onURLChange);
-  iframe.contentWindow?.addEventListener("pushState", onURLChange);
-  iframe.contentWindow?.addEventListener("replaceState", onURLChange);
+  iframe.contentWindow?.addEventListener("popstate", checkURLChange);
+  iframe.contentWindow?.addEventListener("pushState", checkURLChange);
+  iframe.contentWindow?.addEventListener("replaceState", checkURLChange);
 };
 
 const init = () => {
