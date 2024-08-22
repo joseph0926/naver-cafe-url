@@ -1,25 +1,20 @@
 const updateURL = (newURL: string) => {
-  if (newURL !== window.location.href) {
-    window.history.pushState({}, "", newURL);
-  }
+  window.history.pushState({}, "", newURL);
 };
 
 const monitorIframeURL = (iframe: HTMLIFrameElement) => {
-  const iframeDocument = iframe.contentDocument;
-  let previousURL = iframeDocument?.URL || "";
+  let previousURL = "";
 
   const checkURLChange = () => {
+    const iframeDocument = iframe.contentDocument;
     if (iframeDocument) {
       const currentURL = iframeDocument.URL;
-      console.log("currentURL: ", currentURL);
-
       if (currentURL !== previousURL) {
         previousURL = currentURL;
         updateURL(currentURL);
       }
     }
   };
-
   setInterval(checkURLChange, 500);
 };
 
