@@ -15,7 +15,7 @@ const monitorIframeURL = (iframe: HTMLIFrameElement) => {
       }
     }
   };
-  setInterval(checkURLChange, 500);
+  setInterval(checkURLChange, 1500);
 };
 
 const init = () => {
